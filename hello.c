@@ -1,8 +1,11 @@
-int delay(long delay) {
+void delay(long delay) {
     volatile long i;
     for(i = 0; i < delay; i++){
     }
-    return 0;
+}
+
+void toggle_led(int port_number, char* port) {
+    *(port) ^= 1 << port_number; 
 }
 
 int main(void) {
@@ -13,12 +16,12 @@ int main(void) {
     *(DDR_B) = 0b00100000;
 
     while(1) {
-        // LED on (sets the port B number 5 to 1)
-        *(PORT_B) = 0b00100000;
+        // LED on (toggles the 5th bit of PortB)
+        toggle_led(5, PORT_B);
         delay(100000);
 
-        //LED off (sets the port B number 5 to 0)
-        *(PORT_B) = 0b00000000;
+        //LED off (toggles the 5th bit of PortB)
+        toggle_led(5, PORT_B);
         delay(100000);
     }
 
