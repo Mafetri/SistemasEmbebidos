@@ -8,8 +8,7 @@ int delay(long delay) {
 int main(void) {
     volatile unsigned char * DDR_B = 0x24;
     volatile unsigned char * PORT_B = 0x25;
-    long i;
-    
+
     // Sets the DDR_B port 5 to output
     *(DDR_B) = 0b00100000;
 
@@ -20,7 +19,7 @@ int main(void) {
 
         //LED off (sets the port B number 5 to 0)
         *(PORT_B) = 0b00000000;
-        delay(100000);    
+        delay(100000);
     }
 
     return 0;
