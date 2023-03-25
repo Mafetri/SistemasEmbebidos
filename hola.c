@@ -6,17 +6,12 @@ void delay(long delay) {
 
 void show_number(int num, volatile char* PORT_D, volatile char* PORT_B) {
     // gfedcba (0 - yes, 1 - no)
-    char segment_7[10] = {
+    char segment_7[5] = {
+        0b0001001,
         0b1000000,
-        0b1111001,
-        0b0100100,
-        0b0110000,
-        0b0011001,
-        0b0010010,
-        0b0000010,
-        0b1111000,
-        0b0000000,
-        0b0010000
+        0b1000111,
+        0b0001000,
+        0b1110111,
     };
 
     // Sets the first 6 bits and keeps the 2 less significant of the PORT intact
@@ -40,7 +35,7 @@ int main(void) {
     while(1) {
         show_number(num, PORT_D, PORT_B);
         delay(200000);
-        num = (num + 1) % 10;
+        num = (num + 1) % 5;
     }
 
     return 0;
