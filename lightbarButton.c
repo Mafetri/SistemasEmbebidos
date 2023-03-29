@@ -10,19 +10,44 @@ int main(void) {
     volatile unsigned char * PIN_B = 0x23;
     volatile unsigned char * DDR_D = 0x2A;
     volatile unsigned char * PORT_D = 0x2B;
-    int portInput = 4;
+
+    // Output
     int portOutput = 5;
-    *(PORT_B) |= 1 << portInput;
     *(DDR_B) |= 1 << portOutput;
+
+    // Input
+    int portInput = 4;
     *(PIN_B) |= 1 << portInput;
+
+    // Lights
+    char lightbar = 0;
+    int lights = 0b00000001;
+    char ida = 1;
+    *(DDR_D) |= 0b111111 << 2; 
+    *(DDR_B) |= 0b11;
 
     while(1) {
         if((*(PIN_B) & (1 << portInput)) == 0) {
             delay(10000);
             if((*(PIN_B) & (1 << portInput)) == 0) {
+                lightbar = !lightbar;
                 *(PORT_B) ^= 1 << portOutput;
                 delay(100000);
             }
+        }
+
+        if(lightbar) {
+            *(PORT_D) = lights << 2 | (*(PORT_D) & 0b11);
+            *(PORT_B) = (*(PORT_B) & (0b111111 << 2)) | lights >> 6;
+            if(ida) {
+                lights <<= 1;
+            } else {
+                lights >>= 1;
+            }
+            if((lights ^ 1) == 0 || (lights ^ (1 << 7)) == 0){
+                ida = !ida;
+            }
+            delay(50000);
         }
     }
 
