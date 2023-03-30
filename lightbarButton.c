@@ -17,7 +17,7 @@ int main(void) {
 
     // Input
     int portInput = 4;
-    *(PIN_B) |= 1 << portInput;
+    *(PORT_B) |= 1 << portInput;
 
     // Lights
     char lightbar = 0;
