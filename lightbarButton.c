@@ -21,7 +21,7 @@ int main(void) {
 
     // Lights
     char lightbar = 0;
-    int lights = 0b00000001;
+    int lights = 0b00000111;
     char ida = 1;
     *(DDR_D) |= 0b111111 << 2; 
     *(DDR_B) |= 0b11;
@@ -44,7 +44,7 @@ int main(void) {
             } else {
                 lights >>= 1;
             }
-            if((lights ^ 1) == 0 || (lights ^ (1 << 7)) == 0){
+            if((lights & 1) || (lights & (1 << 7))){
                 ida = !ida;
             }
             delay(50000);
