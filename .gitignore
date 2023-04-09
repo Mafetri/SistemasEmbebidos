@@ -1,4 +1,2 @@
-script.c
-script.elf
-script.hex
-script.o
+serial.h
+serial.o

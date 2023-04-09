@@ -1,8 +1,4 @@
-void delay(long delay) {
-    volatile long i;
-    for(i = 0; i < delay; i++){
-    }
-}
+#include "myutils.h"
 
 void toggle_led(int port_number, volatile char* port) {
     *(port) ^= 1 << port_number; 
@@ -19,11 +15,11 @@ int main(void) {
     while(1) {
         // LED on (toggles the port_number bit of PortB)
         toggle_led(port_number, PORT_B);
-        delay(100000);
+        delay_ms(10);
 
         //LED off (toggles the port_number bit of PortB)
         toggle_led(port_number, PORT_B);
-        delay(100000);
+        delay_ms(10);
     }
 
     return 0;
