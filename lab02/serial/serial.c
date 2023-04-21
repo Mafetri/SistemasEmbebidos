@@ -1,18 +1,17 @@
 
 /**********************************************************************
  *
- * serial.c - Driver del UART del atmega328p
+ * serial.c - Driver del UART of atmega328p
  *
- * META : ocultar el hardware a la aplicacion 
+ * Objective : hide hardware form app 
  *
- * Configuracion: 9600bps, 8bits data, 1bit stop, sin bit de paridad
+ * Configured: 2400bps, 8-bit data frame, 1-bit stop, 1-bit parity, 4MHz of clock speed
  *
  **********************************************************************/
 
-#include <stdint.h> /* para los tipos de datos. Ej.: uint8_t */
+#include <stdint.h>
 
-typedef struct
-{
+typedef struct {
     uint8_t status_control_a;   // ucsr0a USART Control and Status A
     uint8_t status_control_b;   // ucsr0b USART Control and Status B 
     uint8_t status_control_c;   // ucsr0c USART Control and Status C
@@ -39,6 +38,7 @@ uart_t *serial_port = (uart_t *) (0xc0);
 #define USART_INIT 0b00100110
 #define ENABLE_RX_TX (0b11 << 3)
 #define UDREn 1 << 5
+#define RXCn 1 << 7
 
 void serial_init() {
 	// Configure High and Low registers with BAUD_PRESCALE
@@ -60,8 +60,10 @@ void serial_put_char (char c) {
     serial_port->data_es = c;
 }
 
+char serial_get_char(void) {
+    // Wait for data to be received
+    while (!(serial_port->status_control_a & RXCn));
 
-char serial_get_char(void)
-{
-
+    // Get and return received data from buffer
+    return serial_port->data_es;
 }
