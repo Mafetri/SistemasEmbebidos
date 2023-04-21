@@ -67,3 +67,10 @@ char serial_get_char(void) {
     // Get and return received data from buffer
     return serial_port->data_es;
 }
+
+char serial_try_get_char (void) {
+    if(serial_port->status_control_a & RXCn) {
+        return serial_port->data_es;
+    }
+    return 0;
+}

@@ -1,7 +1,7 @@
 # Este Makefile es una genialidad. Usar en todo proyecto 
 
 CC=avr-gcc
-OBJETOS=main.o serial.o
+OBJETOS=ultrasound_rider_serial.o serial.o myutils.o
 APP=serial
 CFLAGS=-Os -DF_CPU=16000000UL -mmcu=atmega328p 
 LDFLAGS=-mmcu=atmega328p
@@ -25,7 +25,7 @@ flash:
 	avrdude -p atmega328p -c arduino -P /dev/ttyUSB0 -b 115200 -D -U flash:w:$(FIRMWARE):i
 
 clean:
-	rm -f $(filter-out serial.o, $(OBJETOS)) $(APP) $(FIRMWARE)
+	rm -f $(OBJETOS) $(APP) $(FIRMWARE)
 
 arduino:
 	make clean
