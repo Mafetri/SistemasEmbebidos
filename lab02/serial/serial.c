@@ -35,7 +35,7 @@ uart_t *serial_port = (uart_t *) (0xc0);
 2:1 8-bit size (11)
 0   Falling Edge (0)
 */ 
-#define USART_INIT 0b00100110
+#define USART_INIT ((0b00 << 6) | (0b10 << 4) | (0b0 << 3) | (0b11 << 1) | (0b0 << 0))
 #define ENABLE_RX_TX (0b11 << 3)
 #define UDREn 1 << 5
 #define RXCn 1 << 7
