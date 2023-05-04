@@ -1,5 +1,13 @@
-#include "serial.h"
-#include "myutils.h"
+// #include "serial.h"
+// #include "myutils.h"
+
+/*
+Bash code to play:
+cat /dev/ttyUSB0 | 
+while read -n 1 tecla;
+    do xdotool key $tecla;
+done
+*/
 
 int main(void)
 {

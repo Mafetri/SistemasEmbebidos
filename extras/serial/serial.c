@@ -60,6 +60,36 @@ void serial_put_char (char c) {
     serial_port->data_es = c;
 }
 
+void serial_put_int (int num, int length) {
+    char digits[length];
+
+    for(int i = 0; i < length; i++){
+        if(num > 0){
+            digits[i] = (num % 10) + 48;
+            num = num / 10;
+        } else {
+            digits[i] = 48;
+        }
+    }
+
+    for (int j = length-1; j >= 0; j--) {
+        serial_put_char(digits[j]);
+    }
+}
+
+void serial_put_new_line () {
+    serial_put_char('\n');
+    serial_put_char('\r');
+}
+
+void serial_put_start () {
+    serial_put_char('s');
+    serial_put_char('t');
+    serial_put_char('a');
+    serial_put_char('r');
+    serial_put_char('t');
+}
+
 char serial_get_char(void) {
     // Wait for data to be received
     while (!(serial_port->status_control_a & RXCn));
