@@ -39,25 +39,25 @@ void init_timer1() {
   timer1->tccr1a |= (1 << COM1A1);
   // Fast PWM with top ICR1
   timer1->tccr1a |= (1 << WGM11);
-  timer1->tccr1b |= (1 << WGM13) || (1 << WGM12);
+  timer1->tccr1b |= (1 << WGM13) | (1 << WGM12);
   // 8 prescaler (0.5 tick per us)
   timer1->tccr1b |= (1 << CS11);
   // ICR1 (when the counter register must be cleared, or length in ticks of the period)
-  timer1->icr1 = 10000; // 20ms = 50hz -> 4MHz / (8 * 10000) = 50Hz
+  timer1->icr1 = 9900; // 20ms = 50hz -> 4MHz / (8 * 10000) = 50Hz
 
-  // 0deg = 15 ticks
-  // 90deg = 43 ticks
-  // 180deg = 75 ticks
-  timer1->ocr1a = 15;
+  // 0deg = 200 ticks
+  // 90deg = 700 ticks
+  // 180deg = 1200 ticks
+  timer1->ocr1a = 700;
   delay_ms(500);
 }
 
 set_servo_width(int width) {
-  int val = width / 54.5;
-  if(val < 15) {
-    val = 15;
-  } else if (val > 75) {
-    val = 75;
+  int val = width / 3.4125;
+  if(val < 200) {
+    val = 200;
+  } else if (val > 1200) {
+    val = 1200;
   }
 
   timer1->ocr1a = val;
@@ -70,7 +70,7 @@ int main() {
   int val;
   while(1) {
     set_servo_width(adc_get(2));
-    delay_ms(100);
+    delay_ms(500);
   }
   return 0;
 }
