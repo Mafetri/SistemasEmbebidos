@@ -1,7 +1,7 @@
 # Este Makefile es una genialidad. Usar en todo proyecto 
 
 CC=avr-gcc
-OBJETOS=servo_timer1.o myutils.o adc.o
+OBJETOS=laser.o serial.o timer.o adc.o
 APP=serial
 CFLAGS=-Os -DF_CPU=4000000UL -mmcu=atmega328p 
 LDFLAGS=-mmcu=atmega328p
