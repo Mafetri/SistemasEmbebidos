@@ -12,7 +12,7 @@ int led_placa(void)
     volatile unsigned char* DDR_B = (unsigned char*) 0x24;
     volatile unsigned char* PUERTO_B = (unsigned char*) 0x25;
 
-    *DDR_B = 0x20; // control: salida.
+    *DDR_B |= 0x20; // control: salida.
 
     while (1){
         sleepms(200);

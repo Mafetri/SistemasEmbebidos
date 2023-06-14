@@ -30,11 +30,8 @@ int main(void)
 	resume(create(servo, 128, 19, "ser", 0));
 	resume(create(serial_input, 64, 19, "s_i", 0));
 	resume(create(serial_output, 256, 19, "s_o", 0));
-	// resume(create(led_placa, 64, 10, "led", 0));
 
-	while(1) {
-		sleep(20);
-	}
+	led_placa();
 
 	return 0;
 }
