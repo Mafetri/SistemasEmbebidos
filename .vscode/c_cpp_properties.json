@@ -3,7 +3,11 @@
         {
             "name": "Linux",
             "includePath": [
-                "/usr/lib/avr/include/avr/**"
+                "/usr/lib/avr/include/avr/**",
+                "/usr/lib/avr/include",
+                "${workspaceFolder}/xinu-avr-pse/include",
+                "${workspaceFolder}/xinu-avr-pse/include",
+                "${workspaceFolder}/xinu-avr-pse/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
