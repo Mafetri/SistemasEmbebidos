@@ -1,17 +1,24 @@
+/*
+ * tarea_led: este programa parpadea el led de la placa.
+ * 
+ * Se desarrolla como un programa aislado del resto.
+ */
+
 #include <xinu.h>
 
-extern volatile unsigned char * DDR_B;
-extern volatile unsigned char * PORT_B;
 
 int led_placa(void)
 {
-    *DDR_B |= 0x20; // control: salida.
+    volatile unsigned char* DDR_B = (unsigned char*) 0x24;
+    volatile unsigned char* PUERTO_B = (unsigned char*) 0x25;
+
+    *DDR_B = 0x20; // control: salida.
 
     while (1){
         sleepms(200);
-        *PORT_B |= 0x20; // high
+        *PUERTO_B |= 0x20; // high
         sleepms(200);
-        *PORT_B = (*PORT_B & (~0x20)); // low
+        *PUERTO_B = (*PUERTO_B & (~0x20)); // low
     }
 
 }

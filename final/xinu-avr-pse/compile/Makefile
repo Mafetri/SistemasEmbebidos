@@ -74,7 +74,8 @@ SFLAGS  = ${INCLUDE}
 
 # RAFA LDFLAGS = -Wl,--wrap,malloc,--wrap,free,--wrap,realloc,--wrap,fdevopen
 # LDFLAGS = -mmcu=atmega328p -nostartfiles -T ld.script  -Wl,-Map,xinu.map
-LDFLAGS = -mmcu=atmega328p -Wl,-Map,xinu.map -lm -Wl,--gc-sections -mrelax
+LDFLAGS = -mmcu=atmega328p -Wl,-Map,xinu.map -Wl,--gc-sections -mrelax
+
 
 all:	xinu
 

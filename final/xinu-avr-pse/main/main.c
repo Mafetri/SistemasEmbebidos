@@ -1,7 +1,7 @@
 #include <xinu.h>
 #include <avr/interrupt.h>
 #include "serial.h"
-#include <math.h>
+#include "mat.h"
 
 // Process with external code
 extern int led_placa(void);
@@ -31,14 +31,11 @@ volatile unsigned char * PIN_D = 0x29;
 int main(void)
 {
 	serial_init();
-	int a = 2;
-	// double hola = pow((double)a, (double)a);
-	serial_put_int((int)M_E, 3);
-
+	
 	// Create and run process
 	resume(create(locator, 258, 19, "loc", 0));
 	resume(create(wheel_reader, 64, 20, "w_r", 0));
-	resume(create(serial_output, 128, 15, "s_o", 0));
+	resume(create(serial_output, 128, 19, "s_o", 0));
 	// resume(create(rtc, 64, 20, "rtc", 0));
 
 	led_placa();

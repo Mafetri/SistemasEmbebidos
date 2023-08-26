@@ -1,8 +1,8 @@
 #include <xinu.h>
-#include <math.h>
+#include <mat.h>
 
-#define WHEEL_RADIUS 6
-#define WHEEL_SEPARATION 19.5
+#define WHEEL_DIAMETER 6
+#define WHEEL_SEPARATION 10
 #define ENCODER_RES 20
 #define PI 3.14159265359
 
@@ -18,27 +18,32 @@ extern float car_angle;
 int locator(void)
 {
 	// Local Variables
-	unsigned int left_ticks = 0;
-	unsigned int right_ticks = 0;
+	unsigned int delta_left_ticks = 0;
+	unsigned int last_left_ticks = 0;
+	unsigned int delta_right_ticks = 0;
+	unsigned int last_right_ticks = 0;
 	float left_distance = 0.0;
 	float right_distance = 0.0;
 	float center_distance = 0.0;
 
+	char output[24];
 	while (1) {
 		// Read the wheel tick counts from last measurement
-		left_ticks = left_wheel_ticks - left_ticks;
-		right_ticks = right_wheel_ticks - right_ticks;
+		delta_left_ticks = left_wheel_ticks - last_left_ticks;
+		delta_right_ticks = right_wheel_ticks - last_right_ticks;
+        last_left_ticks = left_wheel_ticks;
+        last_right_ticks = right_wheel_ticks;
 
 		// Calculate wheel odometry
-		left_distance = (2.0 * PI * WHEEL_RADIUS * left_ticks) / ENCODER_RES;
-		right_distance = (2.0 * PI * WHEEL_RADIUS * right_ticks) / ENCODER_RES;
+        left_distance = (PI * WHEEL_DIAMETER / ENCODER_RES) * delta_left_ticks;
+        right_distance = (PI * WHEEL_DIAMETER / ENCODER_RES) * delta_right_ticks;
 		center_distance = (left_distance + right_distance) / 2.0;
 
 		// Update robot position and angle
-		// car_x += center_distance * (float)cos((double)car_angle);
-		// car_y += center_distance * (float)sin((double)car_angle);
-		car_angle += (left_distance + right_distance) / WHEEL_SEPARATION;
+		car_angle += (right_distance - left_distance) / WHEEL_SEPARATION;
+		car_x += center_distance * cos(car_angle);
+		car_y += center_distance * sin(car_angle);
 
-        sleepms(50);
+        sleepms(100);
 	}
 }

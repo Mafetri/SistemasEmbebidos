@@ -109,6 +109,11 @@ void serial_put_str(char * str)
     }
 }
 
+void serial_put_new_line () {
+    serial_put_char('\n');
+    serial_put_char('\r');
+}
+
 void serial_put_int (int num, int length) {
     char digits[length];
 
@@ -125,3 +130,47 @@ void serial_put_int (int num, int length) {
         serial_put_char(digits[j]);
     }
 }
+
+void serial_put_double (double num, int precision) {
+    char output[24];
+    char *str = output;
+
+    // Manejo de números negativos
+    if (num < 0) {
+        *str++ = '-';
+        num = -num;
+    }
+
+    // Parte entera del número
+    unsigned long long intPart = (unsigned long long)num;
+    int intDigits = 1;
+    unsigned long long temp = intPart;
+    while (temp /= 10) {
+        intDigits++;
+    }
+
+    // Convierte la parte entera a cadena
+    for (int i = intDigits - 1; i >= 0; i--) {
+        str[i] = '0' + intPart % 10;
+        intPart /= 10;
+    }
+    str += intDigits;
+
+    // Agrega el punto decimal
+    *str++ = '.';
+
+    // Parte fraccionaria del número
+    double fracPart = num - (double)((unsigned long long)num);
+    for (int i = 0; i < precision; i++) {
+        fracPart *= 10;
+        int digit = (int)fracPart;
+        *str++ = '0' + digit;
+        fracPart -= digit;
+    }
+
+    // Termina la cadena
+    *str = '\0';
+
+    serial_put_str(output);
+}
+
