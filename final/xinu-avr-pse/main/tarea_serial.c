@@ -9,8 +9,6 @@ extern float car_x;
 extern float car_y;
 extern float car_angle;
 
-
-
 // Another Process
 int serial_output(void)
 {
