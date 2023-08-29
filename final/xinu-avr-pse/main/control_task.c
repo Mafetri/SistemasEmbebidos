@@ -8,9 +8,13 @@
 #define RW_REV_PORT 7
 #define LW_SPEED_PORT 1
 #define LW_SPEED_PORT 2
-#define WHEEL_DIAMETER 3
-#define WHEEL_SEPARATION 55.6
-#define MIN_SPEED 0.2
+
+// Car Configuration
+#define WHEEL_RADIUS 3
+#define WHEEL_SEPARATION 19.44
+
+// The min speed for the motors to move, higher -> imprecise, lower -> can't move
+#define MIN_SPEED 2
 
 // Global Variables
 extern volatile unsigned char *DDR_D;
@@ -24,7 +28,7 @@ extern float car_angle;
 #define target_y 80 // Target Y coordinate
 
 // Constants for PID control
-#define Kp 1.5
+#define Kp 0.5
 #define Ki 0.01
 #define Kd 0.5
 #define dT 100
@@ -69,8 +73,8 @@ int controller(void)
     double error_x;
     double error_y;
     double proportional;
-    double integral;
-    double derivate;
+    double integral = 0.0;
+    double derivate = 0.0;
     double pid;
     double left_speed;
     double right_speed;
@@ -86,13 +90,15 @@ int controller(void)
         error_x = target_x - car_x;
         error_y = target_y - car_y;
 
-        if (error_x < 0.3 && error_x < 0.3)
+        // If its near the target, stops
+        if (error_x < 0.1 && error_y < 0.1)
         {
             move_wheel('L', 'F', 0);
             move_wheel('R', 'F', 0);
             break;
         }
 
+        // Calculates the direct angle to the target 
         angle_to_target = atan2(error_y, error_x);
 
         // Error between the actual angle and the angle needed
@@ -103,23 +109,19 @@ int controller(void)
         proportional = error_angle;
 
         // Integral
-        integral = integral + error_angle * dT;
+        integral = integral + error_angle;
 
         // Derivative
-        derivate = (error_angle - derivate) / dT;
+        derivate = (error_angle - derivate);
 
+        // Gets the total PID
         pid = Kp * proportional + Ki * integral + Kd * derivate;
 
-        right_speed = (2 * MIN_SPEED + pid * WHEEL_SEPARATION) / (2 * WHEEL_DIAMETER);
-        left_speed = (2 * MIN_SPEED - pid * WHEEL_SEPARATION) / (2 * WHEEL_DIAMETER);
+        // Saves the derivate for the next run
+        derivate = error_angle;
 
-        // if (left_speed > right_speed) {
-        //     left_speed = left_speed/left_speed;
-        //     right_speed = right_speed/left_speed;
-        // } else {
-        //     left_speed = left_speed/right_speed;
-        //     right_speed = right_speed/right_speed;
-        // }
+        right_speed = (2 * MIN_SPEED + pid * WHEEL_SEPARATION) / (2 * WHEEL_RADIUS);
+        left_speed = (2 * MIN_SPEED - pid * WHEEL_SEPARATION) / (2 * WHEEL_RADIUS);
 
         // Move the wheels according to the PID outputs
         move_wheel('L', 'F', left_speed);

@@ -2,7 +2,7 @@
 #include <mat.h>
 
 #define WHEEL_DIAMETER 3
-#define WHEEL_SEPARATION 55.6
+#define WHEEL_SEPARATION 19.44
 #define ENCODER_RES 20
 #define PI 3.14159265359
 
@@ -40,9 +40,9 @@ int locator(void)
 		center_distance = (left_distance + right_distance) / 2.0;
 
 		// Update robot position and angle
-		car_angle += (right_distance - left_distance) / WHEEL_SEPARATION;
 		car_x += center_distance * cos(car_angle);
 		car_y += center_distance * sin(car_angle);
+		car_angle += (right_distance - left_distance) / WHEEL_SEPARATION;
 
 		sleepms(100);
 	}

@@ -1101,7 +1101,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000     0x37e6
+.text           0x0000000000000000     0x3796
  *(.vectors)
  .vectors       0x0000000000000000       0x68 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/crtatmega328p.o
                 0x0000000000000000                __vectors
@@ -1336,180 +1336,180 @@ END GROUP
                 0x0000000000001d7a       0x5e binaries/control_task.o
                 0x0000000000001d7a                move_wheel
  .text.controller
-                0x0000000000001dd8      0x246 binaries/control_task.o
+                0x0000000000001dd8      0x1e2 binaries/control_task.o
                 0x0000000000001dd8                controller
- .text.locator  0x000000000000201e      0x132 binaries/locator_task.o
-                0x000000000000201e                locator
+ .text.locator  0x0000000000001fba      0x146 binaries/locator_task.o
+                0x0000000000001fba                locator
  .text.startup.main
-                0x0000000000002150       0xe8 binaries/main.o
-                0x0000000000002150                main
- .text.sin      0x0000000000002238      0x21a binaries/mat.o
-                0x0000000000002238                sin
- .text.cos      0x0000000000002452       0x76 binaries/mat.o
-                0x0000000000002452                cos
- .text.atan     0x00000000000024c8      0x1f4 binaries/mat.o
-                0x00000000000024c8                atan
- .text.atan2    0x00000000000026bc       0xbe binaries/mat.o
-                0x00000000000026bc                atan2
+                0x0000000000002100       0xe8 binaries/main.o
+                0x0000000000002100                main
+ .text.sin      0x00000000000021e8      0x21a binaries/mat.o
+                0x00000000000021e8                sin
+ .text.cos      0x0000000000002402       0x76 binaries/mat.o
+                0x0000000000002402                cos
+ .text.atan     0x0000000000002478      0x1f4 binaries/mat.o
+                0x0000000000002478                atan
+ .text.atan2    0x000000000000266c       0xbe binaries/mat.o
+                0x000000000000266c                atan2
  .text.serial_init
-                0x000000000000277a       0x18 binaries/serial.o
-                0x000000000000277a                serial_init
+                0x000000000000272a       0x18 binaries/serial.o
+                0x000000000000272a                serial_init
  .text.serial_put_char
-                0x0000000000002792       0x12 binaries/serial.o
-                0x0000000000002792                serial_put_char
+                0x0000000000002742       0x12 binaries/serial.o
+                0x0000000000002742                serial_put_char
  .text.serial_put_str
-                0x00000000000027a4       0x16 binaries/serial.o
-                0x00000000000027a4                serial_put_str
+                0x0000000000002754       0x16 binaries/serial.o
+                0x0000000000002754                serial_put_str
  .text.serial_put_new_line
-                0x00000000000027ba        0x8 binaries/serial.o
-                0x00000000000027ba                serial_put_new_line
+                0x000000000000276a        0x8 binaries/serial.o
+                0x000000000000276a                serial_put_new_line
  .text.serial_put_double
-                0x00000000000027c2      0x1bc binaries/serial.o
-                0x00000000000027c2                serial_put_double
+                0x0000000000002772      0x1bc binaries/serial.o
+                0x0000000000002772                serial_put_double
  .text.serial_output
-                0x000000000000297e       0x64 binaries/tarea_serial.o
-                0x000000000000297e                serial_output
+                0x000000000000292e       0x64 binaries/tarea_serial.o
+                0x000000000000292e                serial_output
  .text.init_timer1
-                0x00000000000029e2       0x50 binaries/timer1.o
-                0x00000000000029e2                init_timer1
+                0x0000000000002992       0x50 binaries/timer1.o
+                0x0000000000002992                init_timer1
  .text.set_timer1_ocr1a_dutycycle
-                0x0000000000002a32       0x6e binaries/timer1.o
-                0x0000000000002a32                set_timer1_ocr1a_dutycycle
+                0x00000000000029e2       0x6e binaries/timer1.o
+                0x00000000000029e2                set_timer1_ocr1a_dutycycle
  .text.set_timer1_ocr1b_dutycycle
-                0x0000000000002aa0       0x6e binaries/timer1.o
-                0x0000000000002aa0                set_timer1_ocr1b_dutycycle
+                0x0000000000002a50       0x6e binaries/timer1.o
+                0x0000000000002a50                set_timer1_ocr1b_dutycycle
  .text.wheel_reader
-                0x0000000000002b0e       0x52 binaries/wheel_reader.o
-                0x0000000000002b0e                wheel_reader
+                0x0000000000002abe       0x52 binaries/wheel_reader.o
+                0x0000000000002abe                wheel_reader
  .text.libgcc.div
-                0x0000000000002b60       0x28 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_divmodsi4.o)
-                0x0000000000002b60                __divmodsi4
+                0x0000000000002b10       0x28 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_divmodsi4.o)
+                0x0000000000002b10                __divmodsi4
  .text.libgcc.div
-                0x0000000000002b88       0x10 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_negsi2.o)
-                0x0000000000002b88                __negsi2
+                0x0000000000002b38       0x10 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_negsi2.o)
+                0x0000000000002b38                __negsi2
  .text.libgcc.div
-                0x0000000000002b98       0x1a /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_udivdi3.o)
-                0x0000000000002b98                __umoddi3
-                0x0000000000002b9c                __udivdi3
-                0x0000000000002b9e                __udivdi3_umoddi3
+                0x0000000000002b48       0x1a /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_udivdi3.o)
+                0x0000000000002b48                __umoddi3
+                0x0000000000002b4c                __udivdi3
+                0x0000000000002b4e                __udivdi3_umoddi3
  .text.libgcc.div
-                0x0000000000002bb2       0xa2 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_udivmod64.o)
-                0x0000000000002bb2                __udivmod64
+                0x0000000000002b62       0xa2 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_udivmod64.o)
+                0x0000000000002b62                __udivmod64
  .text.libgcc.prologue
-                0x0000000000002c54       0x38 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_prologue.o)
-                0x0000000000002c54                __prologue_saves__
+                0x0000000000002c04       0x38 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_prologue.o)
+                0x0000000000002c04                __prologue_saves__
  .text.libgcc.prologue
-                0x0000000000002c8c       0x36 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_epilogue.o)
-                0x0000000000002c8c                __epilogue_restores__
- .text.libgcc   0x0000000000002cc2       0x18 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_cmpdi2_s8.o)
-                0x0000000000002cc2                __cmpdi2_s8
+                0x0000000000002c3c       0x36 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_epilogue.o)
+                0x0000000000002c3c                __epilogue_restores__
+ .text.libgcc   0x0000000000002c72       0x18 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_cmpdi2_s8.o)
+                0x0000000000002c72                __cmpdi2_s8
  .text.libgcc.div
-                0x0000000000002cda       0x44 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_udivmodsi4.o)
-                0x0000000000002cda                __udivmodsi4
+                0x0000000000002c8a       0x44 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_udivmodsi4.o)
+                0x0000000000002c8a                __udivmodsi4
  .text.avr-libc.fplib
-                0x0000000000002d1e        0xa /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(addsf3.o)
-                0x0000000000002d1e                __subsf3
-                0x0000000000002d20                __addsf3
+                0x0000000000002cce        0xa /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(addsf3.o)
+                0x0000000000002cce                __subsf3
+                0x0000000000002cd0                __addsf3
  .text.avr-libc.fplib
-                0x0000000000002d28       0xc0 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(addsf3x.o)
-                0x0000000000002d42                __addsf3x
+                0x0000000000002cd8       0xc0 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(addsf3x.o)
+                0x0000000000002cf2                __addsf3x
  .text.avr-libc.fplib
-                0x0000000000002de8        0x8 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(cmpsf2.o)
-                0x0000000000002de8                __lesf2
-                0x0000000000002de8                __nesf2
-                0x0000000000002de8                __eqsf2
-                0x0000000000002de8                __cmpsf2
-                0x0000000000002de8                __ltsf2
+                0x0000000000002d98        0x8 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(cmpsf2.o)
+                0x0000000000002d98                __lesf2
+                0x0000000000002d98                __nesf2
+                0x0000000000002d98                __eqsf2
+                0x0000000000002d98                __cmpsf2
+                0x0000000000002d98                __ltsf2
  .text.avr-libc.fplib
-                0x0000000000002df0        0x4 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(divsf3.o)
-                0x0000000000002df0                __divsf3
+                0x0000000000002da0        0x4 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(divsf3.o)
+                0x0000000000002da0                __divsf3
  .text.avr-libc.fplib
-                0x0000000000002df4       0xcc /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(divsf3x.o)
-                0x0000000000002e0a                __divsf3x
-                0x0000000000002e0e                __divsf3_pse
+                0x0000000000002da4       0xcc /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(divsf3x.o)
+                0x0000000000002dba                __divsf3x
+                0x0000000000002dbe                __divsf3_pse
  .text.avr-libc.fplib
-                0x0000000000002ec0       0x74 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fixsfdi.o)
-                0x0000000000002ec0                __fixsfdi
-                0x0000000000002eca                __fixunssfdi
+                0x0000000000002e70       0x74 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fixsfdi.o)
+                0x0000000000002e70                __fixsfdi
+                0x0000000000002e7a                __fixunssfdi
  .text.avr-libc.fplib
-                0x0000000000002f34        0xa /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fixsfsi.o)
-                0x0000000000002f34                __fixsfsi
+                0x0000000000002ee4        0xa /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fixsfsi.o)
+                0x0000000000002ee4                __fixsfsi
  .text.avr-libc.fplib
-                0x0000000000002f3e       0x58 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fixunssfsi.o)
-                0x0000000000002f3e                __fixunssfsi
+                0x0000000000002eee       0x58 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fixunssfsi.o)
+                0x0000000000002eee                __fixunssfsi
  .text.avr-libc.fplib
-                0x0000000000002f96       0x7a /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(floatsisf.o)
-                0x0000000000002f96                __floatunsisf
-                0x0000000000002f9a                __floatsisf
+                0x0000000000002f46       0x7a /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(floatsisf.o)
+                0x0000000000002f46                __floatunsisf
+                0x0000000000002f4a                __floatsisf
  .text.avr-libc.fplib
-                0x0000000000003010       0x7c /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(floatundisf.o)
-                0x0000000000003010                __floatundisf
-                0x0000000000003012                __fp_di2sf
+                0x0000000000002fc0       0x7c /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(floatundisf.o)
+                0x0000000000002fc0                __floatundisf
+                0x0000000000002fc2                __fp_di2sf
  .text.avr-libc.fplib
-                0x000000000000308c       0x48 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_cmp.o)
-                0x000000000000308c                __fp_cmp
+                0x000000000000303c       0x48 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_cmp.o)
+                0x000000000000303c                __fp_cmp
  .text.avr-libc.fplib
-                0x00000000000030d4        0xc /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_inf.o)
-                0x00000000000030d4                __fp_inf
+                0x0000000000003084        0xc /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_inf.o)
+                0x0000000000003084                __fp_inf
  .text.avr-libc.fplib
-                0x00000000000030e0        0x6 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_nan.o)
-                0x00000000000030e0                __fp_nan
+                0x0000000000003090        0x6 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_nan.o)
+                0x0000000000003090                __fp_nan
  .text.avr-libc.fplib
-                0x00000000000030e6       0x20 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_negdi.o)
-                0x00000000000030e6                __fp_negdi
+                0x0000000000003096       0x20 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_negdi.o)
+                0x0000000000003096                __fp_negdi
  .text.avr-libc.fplib
-                0x0000000000003106        0xe /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_pscA.o)
-                0x0000000000003106                __fp_pscA
+                0x00000000000030b6        0xe /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_pscA.o)
+                0x00000000000030b6                __fp_pscA
  .text.avr-libc.fplib
-                0x0000000000003114        0xe /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_pscB.o)
-                0x0000000000003114                __fp_pscB
+                0x00000000000030c4        0xe /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_pscB.o)
+                0x00000000000030c4                __fp_pscB
  .text.avr-libc.fplib
-                0x0000000000003122       0x22 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_round.o)
-                0x0000000000003122                __fp_round
+                0x00000000000030d2       0x22 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_round.o)
+                0x00000000000030d2                __fp_round
  .text.avr-libc.fplib
-                0x0000000000003144       0x44 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_split3.o)
-                0x0000000000003144                __fp_split3
-                0x0000000000003154                __fp_splitA
+                0x00000000000030f4       0x44 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_split3.o)
+                0x00000000000030f4                __fp_split3
+                0x0000000000003104                __fp_splitA
  .text.avr-libc.fplib
-                0x0000000000003188        0xe /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_zero.o)
-                0x0000000000003188                __fp_zero
-                0x000000000000318a                __fp_szero
+                0x0000000000003138        0xe /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(fp_zero.o)
+                0x0000000000003138                __fp_zero
+                0x000000000000313a                __fp_szero
  .text.avr-libc.fplib
-                0x0000000000003196        0x8 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(gesf2.o)
-                0x0000000000003196                __gtsf2
-                0x0000000000003196                __gesf2
+                0x0000000000003146        0x8 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(gesf2.o)
+                0x0000000000003146                __gtsf2
+                0x0000000000003146                __gesf2
  .text.avr-libc.fplib
-                0x000000000000319e        0x4 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(mulsf3.o)
-                0x000000000000319e                __mulsf3
+                0x000000000000314e        0x4 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(mulsf3.o)
+                0x000000000000314e                __mulsf3
  .text.avr-libc.fplib
-                0x00000000000031a2       0xc2 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(mulsf3x.o)
-                0x00000000000031b6                __mulsf3x
-                0x00000000000031ba                __mulsf3_pse
+                0x0000000000003152       0xc2 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a(mulsf3x.o)
+                0x0000000000003166                __mulsf3x
+                0x000000000000316a                __mulsf3_pse
  .text.avr-libc
-                0x0000000000003264       0x1e /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(strncpy_P.o)
-                0x0000000000003264                strncpy_P
+                0x0000000000003214       0x1e /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(strncpy_P.o)
+                0x0000000000003214                strncpy_P
  .text.avr-libc
-                0x0000000000003282        0xe /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(memset.o)
-                0x0000000000003282                memset
+                0x0000000000003232        0xe /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(memset.o)
+                0x0000000000003232                memset
  .text.avr-libc
-                0x0000000000003290       0x52 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(vsnprintf.o)
-                0x0000000000003290                vsnprintf
+                0x0000000000003240       0x52 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(vsnprintf.o)
+                0x0000000000003240                vsnprintf
  .text.avr-libc
-                0x00000000000032e2      0x3a4 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(vfprintf_std.o)
-                0x00000000000032e2                vfprintf
+                0x0000000000003292      0x3a4 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+                0x0000000000003292                vfprintf
  .text.avr-libc
-                0x0000000000003686       0x16 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(strnlen_P.o)
-                0x0000000000003686                strnlen_P
+                0x0000000000003636       0x16 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(strnlen_P.o)
+                0x0000000000003636                strnlen_P
  .text.avr-libc
-                0x000000000000369c       0x16 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(strnlen.o)
-                0x000000000000369c                strnlen
+                0x000000000000364c       0x16 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(strnlen.o)
+                0x000000000000364c                strnlen
  .text.avr-libc
-                0x00000000000036b2       0x78 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(fputc.o)
-                0x00000000000036b2                fputc
+                0x0000000000003662       0x78 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(fputc.o)
+                0x0000000000003662                fputc
  .text.avr-libc
-                0x000000000000372a       0xbc /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(ultoa_invert.o)
-                0x000000000000372a                __ultoa_invert
-                0x00000000000037e6                . = ALIGN (0x2)
+                0x00000000000036da       0xbc /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+                0x00000000000036da                __ultoa_invert
+                0x0000000000003796                . = ALIGN (0x2)
  *(.fini9)
  *(.fini9)
  *(.fini8)
@@ -1530,9 +1530,9 @@ END GROUP
  *(.fini1)
  *(.fini0)
  *(.fini0)
-                0x00000000000037e6                _etext = .
+                0x0000000000003796                _etext = .
 
-.data           0x0000000000800100       0x8a dirección de carga 0x00000000000037e6
+.data           0x0000000000800100       0x8a dirección de carga 0x0000000000003796
                 0x0000000000800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -1622,8 +1622,8 @@ END GROUP
                 0x00000000008004a6                left_wheel_ticks
                 0x00000000008004a8                rtc_miliseconds
                 0x00000000008004ac                PROVIDE (__bss_end, .)
-                0x00000000000037e6                __data_load_start = LOADADDR (.data)
-                0x0000000000003870                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000000000003796                __data_load_start = LOADADDR (.data)
+                0x0000000000003820                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00000000008004ac        0x0
                 [!provide]                        PROVIDE (__noinit_start, .)
