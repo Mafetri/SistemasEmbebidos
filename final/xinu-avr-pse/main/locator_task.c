@@ -1,7 +1,7 @@
 #include <xinu.h>
 #include <mat.h>
 
-#define WHEEL_DIAMETER 3
+#define WHEEL_DIAMETER 6
 #define WHEEL_SEPARATION 19.44
 #define ENCODER_RES 20
 #define PI 3.14159265359

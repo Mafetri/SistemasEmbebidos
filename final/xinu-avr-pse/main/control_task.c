@@ -1,6 +1,7 @@
 #include <xinu.h>
 #include "mat.h"
 #include "timer1.h"
+#include "data_structures.h"
 
 // Definitions
 #define LW_FWD_PORT 4
@@ -11,11 +12,11 @@
 #define LW_SPEED_PORT 2
 
 // Car Configuration
-#define WHEEL_RADIUS 3
+#define WHEEL_RADIUS 6
 #define WHEEL_SEPARATION 19.44
 
 // The min speed for the motors to move, higher -> imprecise, lower -> can't move
-#define MIN_SPEED 0.3
+#define MIN_SPEED 0.5
 
 // Global Variables
 extern volatile unsigned char *DDR_D;
@@ -24,9 +25,7 @@ extern volatile unsigned char *PIN_D;
 extern float car_x;
 extern float car_y;
 extern float car_angle;
-extern float targets[4][2];
-unsigned int next_target;
-unsigned int total_targets;
+extern volatile queue targets;
 
 // Constants for PID control
 #define Kp 0.5
@@ -79,8 +78,7 @@ int controller(void)
     double pid;
     double left_speed;
     double right_speed;
-    double target_x = targets[next_target][0]; // Target X coordinate
-    double target_y = targets[next_target][1]; // Target Y coordinate
+    double next_target[2];
 
     // Sets the Left Wheel pins to output
     *(DDR_D) |= (1 << LW_FWD_PORT) | (1 << LW_REV_PORT);
@@ -90,24 +88,21 @@ int controller(void)
     while(1)
     {
         // Error in x, y and the angle to the target
-        error_x = target_x - car_x;
-        error_y = target_y - car_y;
+        error_x = next_target[0] - car_x;
+        error_y = next_target[1] - car_y;
 
         // If its near the target
         if (error_x < 0.1 && error_y < 0.1)
         {
-            // If there are no more targets, stops
-            if(next_target >= total_targets) {
+            // If there are more targets
+            if(queue_dequeue(&targets, &next_target)) {
+                error_x = next_target[0] - car_x;
+                error_y = next_target[1] - car_y;
+            } else {
+                // If not, stops
                 move_wheel('L', 'F', 0);
                 move_wheel('R', 'F', 0);
                 break;
-            } else {
-                target_x = targets[next_target][0];
-                target_y = targets[next_target][1];
-                next_target++;
-
-                error_x = target_x - car_x;
-                error_y = target_y - car_y;
             }
         }
 

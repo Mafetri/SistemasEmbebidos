@@ -3,11 +3,13 @@
 #include "serial.h"
 #include "mat.h"
 #include "timer1.h"
+#include "data_structures.h"
 
 // Process with external code
 extern int serial_output(void);
 extern int rtc(void);
-extern int wheel_reader(void);
+// extern int wheel_reader(void);
+extern void encoder_init(void);
 extern int locator(void);
 extern int controller(void);
 
@@ -18,9 +20,7 @@ unsigned long rtc_miliseconds;
 float car_x = 0.0;
 float car_y = 0.0;
 float car_angle = 0.0;
-unsigned int total_targets = 4;
-unsigned int next_target = 0;
-float targets[4][2] = {{60.0, 0.0}, {60.0, 60.0}, {0.0, 60.0}, {0.0, 0.0}};
+volatile queue targets;
 
 // Ports
 volatile unsigned char *DDR_B = 0x24;
@@ -35,12 +35,17 @@ int main(void)
 {
 	serial_init();
 	init_timer1();
+	encoder_init();
+	queue_init(&targets);
+	queue_enqueue_values(&targets, 60.0, 0.0);
+	queue_enqueue_values(&targets, 60.0, 60.0);
+	queue_enqueue_values(&targets, 0.0, 60.0);
+	queue_enqueue_values(&targets, 0.0, 0.0);
 
 	// Create and run process
-	resume(create(locator, 258, 19, "loc", 0));
-	resume(create(wheel_reader, 64, 20, "w_r", 0));
-	resume(create(controller, 128, 19, "con", 0));
+	resume(create(locator, 192, 19, "loc", 0));
 	resume(create(serial_output, 128, 19, "s_o", 0));
+	resume(create(controller, 192, 19, "con", 0));
 
 	*DDR_B |= 1 << 5;
 	while (1)
