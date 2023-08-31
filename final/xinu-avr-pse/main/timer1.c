@@ -50,7 +50,7 @@ void init_timer1()
     sleepms(500);
 }
 
-set_timer1_ocr1a_dutycycle(double val) {
+void set_timer1_ocr1a_dutycycle(double val) {
     if(val < 0.0) {
         val = 0.0;
     } else if (val > 1.0) {
@@ -60,7 +60,7 @@ set_timer1_ocr1a_dutycycle(double val) {
     timer1->ocr1a = (int)(timer1->icr1 * val);
 }
 
-set_timer1_ocr1b_dutycycle(double val) {
+void set_timer1_ocr1b_dutycycle(double val) {
     if(val < 0.0) {
         val = 0.0;
     } else if (val > 1.0) {

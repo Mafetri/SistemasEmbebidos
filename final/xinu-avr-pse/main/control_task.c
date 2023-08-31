@@ -1,5 +1,6 @@
 #include <xinu.h>
 #include "mat.h"
+#include "timer1.h"
 
 // Definitions
 #define LW_FWD_PORT 4
@@ -14,7 +15,7 @@
 #define WHEEL_SEPARATION 19.44
 
 // The min speed for the motors to move, higher -> imprecise, lower -> can't move
-#define MIN_SPEED 2
+#define MIN_SPEED 0.3
 
 // Global Variables
 extern volatile unsigned char *DDR_D;
@@ -23,9 +24,9 @@ extern volatile unsigned char *PIN_D;
 extern float car_x;
 extern float car_y;
 extern float car_angle;
-
-#define target_x 80 // Target X coordinate
-#define target_y 80 // Target Y coordinate
+extern float targets[4][2];
+unsigned int next_target;
+unsigned int total_targets;
 
 // Constants for PID control
 #define Kp 0.5
@@ -78,6 +79,8 @@ int controller(void)
     double pid;
     double left_speed;
     double right_speed;
+    double target_x = targets[next_target][0]; // Target X coordinate
+    double target_y = targets[next_target][1]; // Target Y coordinate
 
     // Sets the Left Wheel pins to output
     *(DDR_D) |= (1 << LW_FWD_PORT) | (1 << LW_REV_PORT);
@@ -90,12 +93,22 @@ int controller(void)
         error_x = target_x - car_x;
         error_y = target_y - car_y;
 
-        // If its near the target, stops
+        // If its near the target
         if (error_x < 0.1 && error_y < 0.1)
         {
-            move_wheel('L', 'F', 0);
-            move_wheel('R', 'F', 0);
-            break;
+            // If there are no more targets, stops
+            if(next_target >= total_targets) {
+                move_wheel('L', 'F', 0);
+                move_wheel('R', 'F', 0);
+                break;
+            } else {
+                target_x = targets[next_target][0];
+                target_y = targets[next_target][1];
+                next_target++;
+
+                error_x = target_x - car_x;
+                error_y = target_y - car_y;
+            }
         }
 
         // Calculates the direct angle to the target 
@@ -120,8 +133,14 @@ int controller(void)
         // Saves the derivate for the next run
         derivate = error_angle;
 
-        right_speed = (2 * MIN_SPEED + pid * WHEEL_SEPARATION) / (2 * WHEEL_RADIUS);
-        left_speed = (2 * MIN_SPEED - pid * WHEEL_SEPARATION) / (2 * WHEEL_RADIUS);
+        right_speed = (2 * 0.05 + pid * WHEEL_SEPARATION) / (2 * WHEEL_RADIUS);
+        left_speed = (2 * 0.05 - pid * WHEEL_SEPARATION) / (2 * WHEEL_RADIUS);
+        if (left_speed > 0 && left_speed < MIN_SPEED) {
+            left_speed = MIN_SPEED;
+        }
+        if (right_speed > 0 && right_speed < MIN_SPEED) {
+            right_speed = MIN_SPEED;
+        }
 
         // Move the wheels according to the PID outputs
         move_wheel('L', 'F', left_speed);
