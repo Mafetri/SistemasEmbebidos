@@ -16,21 +16,19 @@
 #define WHEEL_SEPARATION 19.44
 
 // The min speed for the motors to move, higher -> imprecise, lower -> can't move
-#define MIN_SPEED 0.5
+#define MIN_SPEED 0.8
 
 // Global Variables
+extern volatile car_position car;
 extern volatile unsigned char *DDR_D;
 extern volatile unsigned char *PORT_D;
 extern volatile unsigned char *PIN_D;
-extern float car_x;
-extern float car_y;
-extern float car_angle;
 extern volatile queue targets;
 
 // Constants for PID control
-#define Kp 0.5
+#define Kp 0.1
 #define Ki 0.01
-#define Kd 0.5
+#define Kd 0.1
 #define dT 100
 
 // Move Wheel
@@ -63,9 +61,21 @@ void move_wheel(char side, char direction, double speed)
     }
 }
 
-// Controller
+double abs2(double x)
+{
+    if (x < 0)
+    {
+        return -x;
+    }
+    else
+    {
+        return x;
+    }
+}
+
+// Planner
 // Using the position, moves the wheels
-int controller(void)
+int planner(void)
 {
     // Local Variables
     double angle_to_target;
@@ -79,6 +89,7 @@ int controller(void)
     double left_speed;
     double right_speed;
     double next_target[2];
+    queue_dequeue(&targets, &next_target);
 
     // Sets the Left Wheel pins to output
     *(DDR_D) |= (1 << LW_FWD_PORT) | (1 << LW_REV_PORT);
@@ -88,16 +99,14 @@ int controller(void)
     while(1)
     {
         // Error in x, y and the angle to the target
-        error_x = next_target[0] - car_x;
-        error_y = next_target[1] - car_y;
+        error_x = next_target[0] - car.x;
+        error_y = next_target[1] - car.y;
 
-        // If its near the target
-        if (error_x < 0.1 && error_y < 0.1)
+        if (abs2(error_x) < 1 && abs2(error_y) < 1)
         {
-            // If there are more targets
-            if(queue_dequeue(&targets, &next_target)) {
-                error_x = next_target[0] - car_x;
-                error_y = next_target[1] - car_y;
+            // If there are more targets, jumps to another iteration
+            if(queue_dequeue(&targets, &next_target) == 1) {
+                continue;
             } else {
                 // If not, stops
                 move_wheel('L', 'F', 0);
@@ -110,7 +119,7 @@ int controller(void)
         angle_to_target = atan2(error_y, error_x);
 
         // Error between the actual angle and the angle needed
-        error_angle = angle_to_target - car_angle;
+        error_angle = angle_to_target - car.angle;
         error_angle = atan2(sin(error_angle), cos(error_angle));
 
         // Proportional 

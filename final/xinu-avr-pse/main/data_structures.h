@@ -10,6 +10,16 @@ typedef struct queue
     double data[MAX_SIZE][2];
 } queue;
 
+typedef struct car_position
+{
+    double x;
+    double y;
+    double angle;
+    unsigned int left_ticks;
+    unsigned int right_ticks;
+} car_position;
+
+
 void queue_init(queue *q);
 int queue_enqueue(queue *q, double value[2]);
 int queue_enqueue_values(queue *q, double a, double b);

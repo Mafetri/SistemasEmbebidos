@@ -8,19 +8,14 @@
 // Process with external code
 extern int serial_output(void);
 extern int rtc(void);
-// extern int wheel_reader(void);
 extern void encoder_init(void);
 extern int locator(void);
-extern int controller(void);
+extern int planner(void);
 
 // Global Variables
-unsigned int left_wheel_ticks;
-unsigned int right_wheel_ticks;
 unsigned long rtc_miliseconds;
-float car_x = 0.0;
-float car_y = 0.0;
-float car_angle = 0.0;
 volatile queue targets;
+volatile car_position car;
 
 // Ports
 volatile unsigned char *DDR_B = 0x24;
@@ -38,14 +33,14 @@ int main(void)
 	encoder_init();
 	queue_init(&targets);
 	queue_enqueue_values(&targets, 60.0, 0.0);
-	queue_enqueue_values(&targets, 60.0, 60.0);
-	queue_enqueue_values(&targets, 0.0, 60.0);
-	queue_enqueue_values(&targets, 0.0, 0.0);
+	queue_enqueue_values(&targets, 120.0, 60.0);
+	// queue_enqueue_values(&targets, 0.0, 60.0);
+	// queue_enqueue_values(&targets, 0.0, 0.0);
 
 	// Create and run process
 	resume(create(locator, 192, 19, "loc", 0));
+	resume(create(planner, 192, 19, "pla", 0));
 	resume(create(serial_output, 128, 19, "s_o", 0));
-	resume(create(controller, 192, 19, "con", 0));
 
 	*DDR_B |= 1 << 5;
 	while (1)

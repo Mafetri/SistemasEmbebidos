@@ -1,10 +1,9 @@
 #include <xinu.h>
 #include <avr/interrupt.h>
+#include "data_structures.h"
 
 // Global Variables
-extern unsigned int left_wheel_ticks;
-extern unsigned int right_wheel_ticks;
-extern volatile unsigned char * PIN_D;
+extern volatile car_position car;
 
 #define INT0 0
 #define INT1 1
@@ -21,10 +20,10 @@ void encoder_init() {
 }
 
 ISR(INT0_vect) {
-    right_wheel_ticks++;
+    car.right_ticks++;
 }
 
 ISR(INT1_vect) {
-    left_wheel_ticks++;
+    car.left_ticks++;
 }
 
