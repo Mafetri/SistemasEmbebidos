@@ -33,8 +33,8 @@ int main(void)
 	encoder_init();
 	queue_init(&targets);
 	queue_enqueue_values(&targets, 60.0, 0.0);
-	queue_enqueue_values(&targets, 120.0, 60.0);
-	// queue_enqueue_values(&targets, 0.0, 60.0);
+	queue_enqueue_values(&targets, 60.0, 120.0);
+	// queue_enqueue_values(&targets, 0.0, 120.0);
 	// queue_enqueue_values(&targets, 0.0, 0.0);
 
 	// Create and run process

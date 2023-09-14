@@ -16,7 +16,7 @@
 #define WHEEL_SEPARATION 19.44
 
 // The min speed for the motors to move, higher -> imprecise, lower -> can't move
-#define MIN_SPEED 0.8
+#define MIN_SPEED 0.7
 
 // Global Variables
 extern volatile car_position car;
@@ -26,9 +26,9 @@ extern volatile unsigned char *PIN_D;
 extern volatile queue targets;
 
 // Constants for PID control
-#define Kp 0.1
+#define Kp 0.05
 #define Ki 0.01
-#define Kd 0.1
+#define Kd 0.05
 #define dT 100
 
 // Move Wheel
@@ -61,7 +61,7 @@ void move_wheel(char side, char direction, double speed)
     }
 }
 
-double abs2(double x)
+double double_abs(double x)
 {
     if (x < 0)
     {
@@ -71,6 +71,18 @@ double abs2(double x)
     {
         return x;
     }
+}
+
+double get_speed(double pid){
+    double speed = MIN_SPEED + (pid * WHEEL_SEPARATION / WHEEL_RADIUS);
+
+    if (speed < MIN_SPEED) {
+        speed = MIN_SPEED;
+    } else if (speed > 1) {
+        speed = 1.0;
+    }
+    
+    return speed;
 }
 
 // Planner
@@ -102,7 +114,7 @@ int planner(void)
         error_x = next_target[0] - car.x;
         error_y = next_target[1] - car.y;
 
-        if (abs2(error_x) < 1 && abs2(error_y) < 1)
+        if (double_abs(error_x) < 3 && double_abs(error_y) < 3)
         {
             // If there are more targets, jumps to another iteration
             if(queue_dequeue(&targets, &next_target) == 1) {
@@ -137,14 +149,8 @@ int planner(void)
         // Saves the derivate for the next run
         derivate = error_angle;
 
-        right_speed = (2 * 0.05 + pid * WHEEL_SEPARATION) / (2 * WHEEL_RADIUS);
-        left_speed = (2 * 0.05 - pid * WHEEL_SEPARATION) / (2 * WHEEL_RADIUS);
-        if (left_speed > 0 && left_speed < MIN_SPEED) {
-            left_speed = MIN_SPEED;
-        }
-        if (right_speed > 0 && right_speed < MIN_SPEED) {
-            right_speed = MIN_SPEED;
-        }
+        right_speed = get_speed(pid);
+        left_speed = get_speed(-pid);
 
         // Move the wheels according to the PID outputs
         move_wheel('L', 'F', left_speed);
