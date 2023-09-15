@@ -15,10 +15,10 @@ extern volatile car_position car;
 int locator(void)
 {
 	// Local Variables
-	unsigned int delta_left_ticks = 0;
-	unsigned int last_left_ticks = 0;
-	unsigned int delta_right_ticks = 0;
-	unsigned int last_right_ticks = 0;
+	int delta_left_ticks = 0;
+	int delta_right_ticks = 0;
+	int last_left_ticks = 0;
+	int last_right_ticks = 0;
 	float left_distance = 0.0;
 	float right_distance = 0.0;
 	float center_distance = 0.0;

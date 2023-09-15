@@ -15,8 +15,10 @@ typedef struct car_position
     double x;
     double y;
     double angle;
-    unsigned int left_ticks;
-    unsigned int right_ticks;
+    int left_ticks;
+    int right_ticks;
+    char left_wheel_dir;
+    char right_wheel_dir;
 } car_position;
 
 

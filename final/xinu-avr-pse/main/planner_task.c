@@ -18,15 +18,22 @@
 // The min speed for the motors to move, higher -> imprecise, lower -> can't move
 #define MIN_SPEED 0.7
 
-// Global Variables
+// Extern Global Variables
 extern volatile car_position car;
 extern volatile unsigned char *DDR_D;
 extern volatile unsigned char *PORT_D;
 extern volatile unsigned char *PIN_D;
 extern volatile queue targets;
 
+// Global Variables
+double angle_to_target;
+double error_angle;
+double error_x;
+double error_y;
+double next_target[2];
+
 // Constants for PID control
-#define Kp 0.05
+#define Kp 1.5
 #define Ki 0.01
 #define Kd 0.05
 #define dT 100
@@ -39,11 +46,15 @@ void move_wheel(char side, char direction, double speed)
     {
         if (direction == 'F')
         {
+            *(PORT_D) &= ~(1 << LW_REV_PORT);
             *(PORT_D) |= 1 << LW_FWD_PORT;
+            car.left_wheel_dir = 'F';
         }
         else if (direction == 'R')
         {
+            *(PORT_D) &= ~(1 << LW_FWD_PORT);
             *(PORT_D) |= 1 << LW_REV_PORT;
+            car.left_wheel_dir = 'R';
         }
         set_timer1_ocr1a_dutycycle(speed);
     }
@@ -51,16 +62,29 @@ void move_wheel(char side, char direction, double speed)
     {
         if (direction == 'F')
         {
+            *(PORT_D) &= ~(1 << RW_REV_PORT);
             *(PORT_D) |= 1 << RW_FWD_PORT;
+            car.right_wheel_dir = 'F';
         }
         else if (direction == 'R')
         {
+            *(PORT_D) &= ~(1 << RW_FWD_PORT);
             *(PORT_D) |= 1 << RW_REV_PORT;
+            car.right_wheel_dir = 'R';
         }
         set_timer1_ocr1b_dutycycle(speed);
     }
 }
 
+// Stop Car
+// Stops the car
+void stop_car() {
+    move_wheel('L', 'F', 0);
+    move_wheel('R', 'F', 0);
+}
+
+// Double Abs
+// Returns the double modulus of a double
 double double_abs(double x)
 {
     if (x < 0)
@@ -73,6 +97,8 @@ double double_abs(double x)
     }
 }
 
+// Get Speed
+// Returns the final speed from MIN_SPEED to 1 using the PID number
 double get_speed(double pid){
     double speed = MIN_SPEED + (pid * WHEEL_SEPARATION / WHEEL_RADIUS);
 
@@ -85,22 +111,47 @@ double get_speed(double pid){
     return speed;
 }
 
+// Compute Error Angle
+// Calculates the error angle to the next target
+void compute_error_angle() {
+    angle_to_target = atan2(error_y, error_x);
+
+    // Error between the actual angle and the angle needed
+    error_angle = angle_to_target - car.angle;
+    error_angle = atan2(sin(error_angle), cos(error_angle));
+}
+
+// Pivot Turn
+// Makes the car turns in the same place
+double pivot_turn () {
+    compute_error_angle();
+
+    if(error_angle < 0) {
+        move_wheel('L', 'F', MIN_SPEED);
+        move_wheel('R', 'R', MIN_SPEED);
+    } else {
+        move_wheel('L', 'R', MIN_SPEED);
+        move_wheel('R', 'F', MIN_SPEED);
+    }
+
+    while(double_abs(error_angle) > 0.1) {
+        compute_error_angle();
+    }
+
+    stop_car();
+}
+
 // Planner
 // Using the position, moves the wheels
 int planner(void)
 {
     // Local Variables
-    double angle_to_target;
-    double error_angle;
-    double error_x;
-    double error_y;
     double proportional;
     double integral = 0.0;
     double derivate = 0.0;
     double pid;
     double left_speed;
     double right_speed;
-    double next_target[2];
     queue_dequeue(&targets, &next_target);
 
     // Sets the Left Wheel pins to output
@@ -118,21 +169,20 @@ int planner(void)
         {
             // If there are more targets, jumps to another iteration
             if(queue_dequeue(&targets, &next_target) == 1) {
+                error_x = next_target[0] - car.x;
+                error_y = next_target[1] - car.y;
+                stop_car();
+                sleepms(100);
+                pivot_turn();
                 continue;
             } else {
                 // If not, stops
-                move_wheel('L', 'F', 0);
-                move_wheel('R', 'F', 0);
+                stop_car();
                 break;
             }
         }
 
-        // Calculates the direct angle to the target 
-        angle_to_target = atan2(error_y, error_x);
-
-        // Error between the actual angle and the angle needed
-        error_angle = angle_to_target - car.angle;
-        error_angle = atan2(sin(error_angle), cos(error_angle));
+        compute_error_angle();
 
         // Proportional 
         proportional = error_angle;

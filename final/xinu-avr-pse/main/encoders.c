@@ -20,10 +20,18 @@ void encoder_init() {
 }
 
 ISR(INT0_vect) {
-    car.right_ticks++;
+    if(car.right_wheel_dir == 'R'){
+        car.right_ticks--;
+    } else {
+        car.right_ticks++;
+    }
 }
 
 ISR(INT1_vect) {
-    car.left_ticks++;
+    if(car.left_wheel_dir == 'R'){
+        car.left_ticks--;
+    } else {
+        car.left_ticks++;
+    }
 }
 
